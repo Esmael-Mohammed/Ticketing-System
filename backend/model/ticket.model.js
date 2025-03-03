@@ -1,16 +1,15 @@
 const mongoose=require('mongoose');
-import { type } from './../node_modules/nodemon/index.d';
+//user schema
 const userSchema=new mongoose.Schema({
     name:String,
-    email:{type:String,required:true},
+    email:{type:String,unique:true},
     password:{type:String,required:true},
-    role:{type:String,enum:['user','admin'],default:'user'},
+    role:{type:String,enum:['user','admin'],default:'user'}
 });
+//ticket schema
 const ticketSchema=new mongoose.Schema({
     title:String,
-    required:true,
     description:String,
-    required:true,
     status:{type:String,enum:['open','in progress','closed'],default:'open'},
     createdBy:{type:mongoose.Schema.Types.ObjectId,ref:'User'}
 
