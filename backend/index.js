@@ -9,7 +9,10 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:false}));
 
-
+// Connect to MongoDB 
+mongoose.connect(process.env.MONGODB_URL).then(()=>{
+    console.log('Connected to MongoDB');
+}) 
 app.listen(3000,()=>{
     console.log('Server is running on port 3000');
 })
