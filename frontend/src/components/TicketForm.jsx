@@ -11,17 +11,17 @@ export default class TicketForm extends Component {
     };
   render() {
     return (
-      <div>
-        <form onSubmit={this.handleSubmit} className='mt-4'>
+      <>
+        <form onSubmit={this.handleSubmit} className='mt-60 flex flex-col justify-center max-w-md mx-auto p-5 bg-white shadow-md rounded-sm items-center'>
             <input type="text" placeholder='New Ticket' value={this.state.title} 
             onChange={(e)=>this.setState({title:e.target.value})}
-            className='border p-2 w-full'
+            className='border border-gray-400 w-full rounded-md'
             />
-            <button type='submit' className='bg-blue-500 text-white p-2 mt-2'>
+            <button type='submit' className='bg-gray-500 text-white p-2 mt-2 rounded-md'>
                 Add Ticket
             </button>
         </form>
-      </div>
+      </>
     )
   }
 }
