@@ -1,27 +1,39 @@
 import React, { Component } from 'react'
+import { TicketContext } from '../context/ContextApi';
+import instanceAxios from '../API/axios';
 
 export default class TicketForm extends Component {
-    state={
-        title:'',
+   state={
+    title:'',
+    description:''
+   };
+   static contextType=TicketContext;
+   handleSubmit=async(e)=>{
+    e.preventDefault();
+    const token=this.context.token;
+    await instanceAxios.post('/ticket',{
+      title:this.state.title,
+      description:this.state.description
+    },
+  {
+    headers:{
+      Authorization:`Bearer ${token}`
     }
-    handleSubmit=(e)=>{
-        e.preventDefault();
-        this.props.createTicket(this.state.title);
-        this.setState({title:''});
-    };
+  });
+  this.setState({title:'',description:''});
+  this.props.refreshTicket();
+
+   }
   render() {
     return (
-      <>
-        <form onSubmit={this.handleSubmit} className='mt-60 flex flex-col justify-center max-w-md mx-auto p-5 bg-white shadow-md rounded-sm items-center'>
-            <input type="text" placeholder='New Ticket' value={this.state.title} 
-            onChange={(e)=>this.setState({title:e.target.value})}
-            className='border border-gray-400 w-full rounded-md'
-            />
-            <button type='submit' className='bg-gray-500 text-white p-2 mt-2 rounded-md'>
-                Add Ticket
-            </button>
+      <div className="p-4 border rounded bg-gray-100">
+        <h2 className="text-lg font-bold">Create Ticket</h2>
+        <form onSubmit={this.handleSubmit}>
+          <input className="w-full p-2 border" type="text" placeholder="Title" value={this.state.title} onChange={(e) => this.setState({ title: e.target.value })} />
+          <textarea className="w-full p-2 border mt-2" placeholder="Description" value={this.state.description} onChange={(e) => this.setState({ description: e.target.value })}></textarea>
+          <button className="w-full bg-blue-500 text-white p-2 mt-2" type="submit">Submit</button>
         </form>
-      </>
+      </div>
     )
   }
 }
