@@ -4,27 +4,22 @@ import instanceAxios from './../API/axios';
 const TicketContext=createContext();
 export default class ContextApi extends Component {
     state={
-        isAuthenticated:false,
         user:null,
         token:localStorage.getItem('token')||'',
     }
-    componentDidMount(){
-        if(this.state.token){
-            instanceAxios.defaults.headers.common['Authorization'=`Bearer ${this.state.token}`];
-            instanceAxios.get('/login').then((res)=>
-                this.setState({isAuthenticated:true,user:res.data})
-
-            ).catch(()=>this.logout())
+    login=async(email,password)=>{
+        try {
+            const response=await instanceAxios.post('/login',{email,password});
+            const {token,role}=response.data;
+            this.setState({user:role,token})
+            localStorage.setItem('token',token);
+        } catch (error) {
+            console.log({message:error.response.data.message});
         }
-    
-    }
-    login=(userData,token)=>{
-        this.setState({isAuthenticated:true,user:userData,token});
-        localStorage.setItem('token',token);
     }
     logout=()=>{
-        this.setState({isAuthenticated:false,user:null,token:''})
-        localStorage.removeItem('token')
+        this.setState({user:null,token:''});
+            localStorage.removeItem('token');
     }
 
   render() {
@@ -34,4 +29,7 @@ export default class ContextApi extends Component {
         </TicketContext.Provider>
     )
   }
+
 }
+export const TicketConsumer=TicketContext.Consumer;
+export {TicketContext};
