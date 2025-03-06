@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { TicketContext } from './../context/ContextApi';
+import { TicketContext } from '../context/ContextProvider';
 import {Link} from 'react-router-dom';
 
 export default class Navbar extends Component {
@@ -8,7 +8,7 @@ export default class Navbar extends Component {
     const {user,logout}=this.context;
     return (
       <nav className='p-4 bg-gray-800 text-white flex justify-between'>
-        <h1 className='text-lg font-bold '>Support System</h1>
+        <h1 className='text-lg font-bold '>Ticketing System</h1>
         <div>
             {user?(
                 <>

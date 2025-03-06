@@ -2,18 +2,17 @@
  import React, { Component } from 'react'
 import TicketForm from './components/TicketForm';
 import './App.css';
-import Auth from './components/Auth';
-import ContextApi from './context/ContextApi';
+import ContextProvider from './context/ContextProvider';
+import Navbar from './components/Navbar';
  
   class App extends Component {
    render() {
      return (
        <>
-       <ContextApi>
-
+       <ContextProvider>
+        <Navbar/>
         <TicketForm/>
-        <Auth/>
-       </ContextApi>
+       </ContextProvider>
        </>
      )
    }

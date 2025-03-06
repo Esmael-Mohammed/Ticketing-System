@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { TicketContext } from '../context/ContextApi';
+import { TicketContext } from '../context/ContextProvider';
 import instanceAxios from '../API/axios';
 
 export default class TicketForm extends Component {
@@ -11,7 +11,7 @@ export default class TicketForm extends Component {
    handleSubmit=async(e)=>{
     e.preventDefault();
     const token=this.context.token;
-    await instanceAxios.post('/ticket',{
+    await instanceAxios.post('/tickets',{
       title:this.state.title,
       description:this.state.description
     },
@@ -26,7 +26,7 @@ export default class TicketForm extends Component {
    }
   render() {
     return (
-      <div className="p-4 border rounded bg-gray-100">
+      <div className="p-4 border rounded bg-gray-100 flex flex-col justify-center items-center">
         <h2 className="text-lg font-bold">Create Ticket</h2>
         <form onSubmit={this.handleSubmit}>
           <input className="w-full p-2 border" type="text" placeholder="Title" value={this.state.title} onChange={(e) => this.setState({ title: e.target.value })} />

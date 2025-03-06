@@ -1,8 +1,8 @@
 import React, { Component, createContext } from 'react'
-import instanceAxios from './../API/axios';
+import instanceAxios from '../API/axios';
 
 const TicketContext=createContext();
-export default class ContextApi extends Component {
+export default class ContextProvider extends Component {
     state={
         user:null,
         token:localStorage.getItem('token')||'',
