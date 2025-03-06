@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { TicketContext } from '../context/ContextProvider';
 import instanceAxios from '../API/axios';
-import { reactRefresh } from 'eslint-plugin-react-refresh';
 
 export default class TicketList extends Component {
     static contextType=TicketContext;
