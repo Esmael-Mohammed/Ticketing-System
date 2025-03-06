@@ -4,17 +4,19 @@ const bodyParser=require('body-parser');
 const cors=require('cors');
 require('dotenv').config();
 
-
-
 const ticketRoutes=require('./routes/ticket.route');
+const userRoutes=require('./routes/user.route');
+//Express app
 const app=express();
 //Middleware
 app.use(cors());
 app.use(express.json())
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:false}));
-//Routes
+//ticket Routes
 app.use('/api',ticketRoutes);
+//user Routes
+app.use('/api',userRoutes);
 
 // Connect to MongoDB 
 mongoose.connect(process.env.MONGODB_URL).then(()=>{
