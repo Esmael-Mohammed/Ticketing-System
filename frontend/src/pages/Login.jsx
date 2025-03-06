@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
+import { Navigate } from 'react-router-dom';
+import { TicketContext } from '../context/ContextProvider';
 
 export default class Login extends Component {
     state = { email: "", password: "", redirect: false };
-  static contextType = AuthContext;
+  static contextType = TicketContext;
   handleSubmit = async (e) => {
     e.preventDefault();
     await this.context.login(this.state.email, this.state.password);

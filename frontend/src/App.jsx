@@ -4,6 +4,8 @@ import TicketForm from './components/TicketForm';
 import './App.css';
 import ContextProvider from './context/ContextProvider';
 import Navbar from './components/Navbar';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
  
   class App extends Component {
    render() {
@@ -12,6 +14,8 @@ import Navbar from './components/Navbar';
        <ContextProvider>
         <Navbar/>
         <TicketForm/>
+        <Login/>
+        <Signup/>
        </ContextProvider>
        </>
      )
