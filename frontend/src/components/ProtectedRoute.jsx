@@ -1,11 +1,19 @@
-import React, { Component } from 'react'
-import { TicketContext } from '../context/ContextProvider';
-import { Navigate } from 'react-router-dom';
+import React, { Component } from "react";
+import { Navigate } from "react-router-dom";
+import { TicketContext } from "../context/ContextProvider";
 
 export default class ProtectedRoute extends Component {
-    static contextType=TicketContext;
   render() {
-    const {user}=this.context;
-    return user ? this.props.children:<Navigate to='/login'/>;
+    return (
+      <TicketContext.Consumer>
+        {({ user }) => {
+          if (!user) {
+            return <Navigate to="/login" />;
+          }
+
+          return this.props.children;   
+        }}
+      </TicketContext.Consumer>
+    );
   }
 }

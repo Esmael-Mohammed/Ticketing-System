@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import { TicketContext } from '../context/ContextProvider';
+import TicketList from '../components/TicketList';
+import instanceAxios from '../API/axios';
 
 export default class AdminDashboard extends Component {
     state={
@@ -14,11 +16,14 @@ export default class AdminDashboard extends Component {
                     Authorization:`Bearer ${token}`
                 }
             });
-            this.setState({tickets:response.data});
-
-        } catch (error) {
-            console.log({message:error.response.data.message});
-        }
+            if (response.data && response.data.tickets) {
+                this.setState({ tickets: response.data.tickets });
+              } else {
+                console.log('No tickets found or incorrect response format');
+              }
+            } catch (error) {
+              console.error('Error fetching tickets:', error.response?.data?.message || error.message);
+            }
     }
     componentDidMount(){
         this.fetchTickets();
