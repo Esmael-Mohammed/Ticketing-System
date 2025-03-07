@@ -3,7 +3,17 @@ const bcrypt=require('bcrypt');
 const jwt=require('jsonwebtoken');
 const signup=async(req,res)=>{
     try {
-        const {name,email,password,role}=req.body;
+        const { name, email, password, role } = req.body;
+  
+        if (!name || !email || !password || !role) {
+          return res.status(400).json({ message: "All fields are required" });
+        }
+      
+        // Check if email is already registered
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+          return res.status(400).json({ message: "Email already exists" });
+        }
         const salt=await bcrypt.genSalt(12);
         const passwordHash=await bcrypt.hash(password,salt);
         const user=await User.create({name,email,password:passwordHash,role});
