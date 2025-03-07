@@ -6,8 +6,8 @@ class Navbar extends Component {
   static contextType = TicketContext;
 
   handleLogout = () => {
-    this.context.logout();  // Calls the logout function from context
-    window.location.href = '/login';  // Redirect to login page
+    this.context.logout();   
+    window.location.href = '/login';  
   };
 
   render() {
@@ -22,7 +22,7 @@ class Navbar extends Component {
               <Link className="mr-4" to={user?.role === 'admin' ? '/admin' : '/'}>
                 Dashboard
               </Link>
-              <span className="mr-4">Welcome, {user?.name}</span>  {/* Display user name */}
+              <span className="mr-4">Welcome, {user?.name}</span>   
               <button
                 onClick={this.handleLogout}
                 className="bg-red-500 px-4 py-2 rounded"
