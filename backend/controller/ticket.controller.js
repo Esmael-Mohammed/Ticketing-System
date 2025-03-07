@@ -15,16 +15,18 @@ const createTicket=async(req,res)=>{
     }
 }
 const getTicket=async(req,res)=>{
-    try{
-        if(req.user.role==='admin'){
-            const tickets=await Ticket.find().populate('createdBy','name email');
-            return res.status(200).json({tickets})
+    try {
+        let tickets;
+        if (req.user.role === 'admin') {
+            tickets = await Ticket.find().populate('createdBy', 'name email');
+        } else {
+            tickets = await Ticket.find({ createdBy: req.user._id });
         }
-        const tickets=await Ticket.find({createdBy:req.user._id});
-        res.status(200).json({tickets})
-    }
-    catch(error){
-        res.status(400).json({message:error.message})
+
+        // Return tickets in a structured object
+        return res.status(200).json({ tickets});
+    } catch (error) {
+        res.status(400).json({ message: error.message });
     }
 }
 const updateTicket=async(req,res)=>{
