@@ -3,7 +3,7 @@ import { Navigate } from 'react-router-dom';
 import { TicketContext } from '../context/ContextProvider';
 
 export default class Login extends Component {
-  state = { email: "", password: "", redirectTo: null };
+  state = { email: "", password: "", redirectTo: null,errorMessage:'' };
 
   static contextType = TicketContext;
 
@@ -11,7 +11,10 @@ export default class Login extends Component {
     e.preventDefault();
     
     const success = await this.context.login(this.state.email, this.state.password);
-    if (!success) return;  // If login fails, do nothing
+    if (!success) {
+      this.setState({errorMessage:"Invalid email or password. Please try again."})
+      return;
+    }  // If login fails, do nothing
 
     const updatedUser = JSON.parse(localStorage.getItem('user'));  
     if (updatedUser?.role === "admin") {
@@ -29,6 +32,9 @@ export default class Login extends Component {
     return (
       <div className="max-w-md mx-auto p-6">
         <h2 className="text-xl font-bold mb-4">Login</h2>
+        {this.state.errorMessage && (
+          <div className="text-red-500 mb-4">{this.state.errorMessage}</div> // Display error message
+        )}
         <form onSubmit={this.handleSubmit}>
           <input
             type="email"
